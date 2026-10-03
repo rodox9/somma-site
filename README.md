@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SOMMA — Site Institucional
 
-## Getting Started
+Site institucional multi-página da SOMMA (inteligência e estratégia para o mercado imobiliário B2B).
 
-First, run the development server:
+- **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4
+- **Referência de direção:** Palantir (inteligência aplicada à operação), traduzida ao sistema visual SOMMA v2.0 — dark navy institucional + 1 acento vivo `#0198ff` (regra 70/20/10), big numbers, labels mono `[ ]`, alternância editorial dark/light.
+
+## Páginas
+
+| Rota | Página |
+|---|---|
+| `/` | Home — hero-tese, manifesto, pilares, método, 8 frentes, leitura SOMMA, CTA |
+| `/sobre` | A SOMMA — verdade que enxergamos, missão/visão, arquétipos, valores |
+| `/inteligencia` | Como pensamos — método em 5 passos, hierarquia do insight, pilares |
+| `/servicos` | 8 frentes de inteligência (com âncoras) + como entregamos |
+| `/insights` | Análises e leituras (base editorial / LinkedIn-driven) |
+| `/contato` | Formulário B2B segmentado por persona |
+
+## Rodar
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # http://localhost:3000
+npm run build    # build de produção (estático)
+npm start        # servir o build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Sistema de design
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Tokens** (`app/globals.css`): navy `#23234e` · ink `#0e0e1a` · paper `#fff8eb` · graphite `#3b3939` · blue `#284496` · accent `#0198ff` · blue-light `#aad5f3`.
+- **Fontes** (`app/layout.tsx`): Plus Jakarta Sans (display) · DM Sans (corpo) · IBM Plex Mono (labels/dados) · Newsreader Italic (pull-quotes).
+- **Componentes** (`components/`): nav, footer, ui (Container/Label/Button/SectionHeading/Glow), reveal, page-hero, cta-band, contact-form.
+- **Conteúdo canônico** (`lib/content.ts`): serviços, método, pilares, valores, personas, stats, insights — extraído de `brands/somma/manual.md`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Pendências para produção
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Ligar o formulário de contato a um endpoint/CRM/e-mail (hoje só estado local — ver `components/contact-form.tsx`).
+- [ ] Substituir os 4 insights de exemplo por análises reais (CMS ou MDX).
+- [ ] URLs reais de LinkedIn/Instagram e e-mail de contato.
+- [ ] OG image e favicon SOMMA.

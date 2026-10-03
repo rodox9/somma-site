@@ -1,26 +1,306 @@
 @import "tailwindcss";
 
+/* ============================================================
+   SOMMA — Design System
+   Referência: Palantir (inteligência aplicada) traduzida ao
+   sistema visual SOMMA v2.0. Regra cromática 70/20/10.
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark — autoridade / profundidade */
+  --somma-navy: #23234e;        /* azul profundo (base dark) */
+  --somma-ink: #0e0e1a;         /* dark mais profundo (hero) */
+  --somma-navy-soft: #2c2c5e;
+
+  /* Light — leitura / papel premium */
+  --somma-paper: #fff8eb;       /* off-white (calor humano) */
+  --somma-graphite: #3b3939;    /* grafite (texto sobre claro) */
+
+  /* Azuis */
+  --somma-blue: #284496;        /* azul institucional */
+  --somma-accent: #0198ff;      /* acento vivo (10% — UM por seção) */
+  --somma-blue-light: #aad5f3;  /* azul claro */
+
+  --background: var(--somma-ink);
+  --foreground: var(--somma-paper);
+
+  /* easing oficial (briefing §19) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-sharp: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
+  --color-navy: var(--somma-navy);
+  --color-ink: var(--somma-ink);
+  --color-navy-soft: var(--somma-navy-soft);
+  --color-paper: var(--somma-paper);
+  --color-graphite: var(--somma-graphite);
+  --color-blue: var(--somma-blue);
+  --color-accent: var(--somma-accent);
+  --color-blue-light: var(--somma-blue-light);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-display: var(--font-jakarta);
+  --font-body: var(--font-dm-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-newsreader);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: color-mix(in srgb, var(--somma-paper) 12%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--somma-ink);
+  color: var(--somma-paper);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--somma-accent);
+  color: #fff;
+}
+
+/* ---- Mono label [INSIGHT] ---- */
+.mono-label {
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* ---- Glow azul vivo (assinatura dark) ---- */
+.somma-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Ruído editorial sutil (4–6%) ---- */
+.somma-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-size: 200px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.somma-noise--strong::before {
+  opacity: 0.08;
+}
+
+/* ---- Linhas de leitura verticais — assinatura SOMMA (anatomy) ---- */
+.somma-grid-lines {
+  background-image: repeating-linear-gradient(
+    to right,
+    color-mix(in srgb, var(--somma-blue-light) 28%, transparent) 0,
+    color-mix(in srgb, var(--somma-blue-light) 28%, transparent) 1px,
+    transparent 1px,
+    transparent 96px
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* ---- Big number monumento ---- */
+.big-number {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+}
+.big-number sup {
+  font-family: var(--font-body), sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.42em;
+  color: var(--somma-accent);
+  vertical-align: super;
+}
+
+.display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.035em;
+}
+
+.serif-italic {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+}
+
+/* italic de display (hook editorial Linha A) — Jakarta 300 azul-claro */
+.display-italic {
+  font-family: var(--font-display), sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--somma-blue-light);
+  letter-spacing: -0.02em;
+}
+
+/* ---- Efeitos oficiais do Manual Visual v2.0 ---- */
+.somma-gradient-deep {
+  background: linear-gradient(135deg, #23234e 0%, #284496 55%, #0198ff 100%);
+}
+.somma-gradient-navy {
+  background: linear-gradient(160deg, #23234e 0%, #1a1a40 50%, #0e0e25 100%);
+}
+/* atmosfera de hero — dois halos radiais embutidos */
+.somma-hero-bg {
+  background:
+    radial-gradient(ellipse 60% 50% at 80% 40%, rgba(1, 152, 255, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(40, 68, 150, 0.2) 0%, transparent 60%),
+    var(--somma-ink);
+}
+/* glow estratégico radial canônico (ponto de decisão) */
+.somma-glow-point {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(1, 152, 255, 0.6) 0%, rgba(1, 152, 255, 0.15) 40%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+}
+/* divider oficial — gradiente que apaga nas pontas */
+.somma-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(170, 213, 243, 0.18), transparent);
+}
+/* superfície elevada + inner-stroke */
+.somma-elevated {
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+}
+/* eyebrow oficial com risco azul-vivo */
+.somma-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--somma-accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.somma-eyebrow::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--somma-accent);
+}
+
+/* ---- Reveal on scroll ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Desenho progressivo das linhas do mapa de conexão ---- */
+.system-line {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  transition: stroke-dashoffset 950ms var(--ease-out);
+}
+.reveal.is-visible .system-line {
+  stroke-dashoffset: 0;
+}
+.map-node {
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: center;
+  transform-box: fill-box;
+  transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
+}
+.reveal.is-visible .map-node {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ---- Cards e interações (briefing §24) ---- */
+.front-card {
+  transition: transform 220ms var(--ease-out), border-color 220ms var(--ease-out),
+    background 220ms var(--ease-out);
+}
+.front-card:hover {
+  transform: translateY(-6px);
+}
+.front-card .card-detail {
+  opacity: 0.62;
+  transition: opacity 220ms var(--ease-out);
+}
+.front-card:hover .card-detail {
+  opacity: 1;
+}
+
+/* afordância de hover na faixa de clientes — sublinhado que cresce */
+.client-underline {
+  height: 1px;
+  width: 0;
+  background: var(--somma-accent);
+  transition: width 240ms var(--ease-out);
+}
+.group:hover .client-underline {
+  width: 100%;
+}
+
+/* ---- Marquee de clientes (motion rotativo contínuo) ---- */
+@keyframes somma-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: somma-marquee 45s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  /* clip só no horizontal (sem scroll), vertical visível p/ o tooltip do hover transbordar.
+     fade das bordas via overlays (não mask, que recortaria o tooltip ao border-box). */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+/* underline animado para links de navegação */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 0;
+  background: var(--somma-accent);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link[data-active="true"]::after {
+  width: 100%;
 }
