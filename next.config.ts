@@ -1,15 +1,10 @@
 import type { NextConfig } from "next";
 
-// GitHub Pages serve o site em https://rodox9.github.io/somma-site/
-// => precisamos de export estático + basePath com o nome do repositório.
-const repoBase = "/somma-site";
-
+// Domínio próprio (sommainc.com.br) via GitHub Pages: o site serve na RAIZ,
+// então NÃO usamos basePath. O arquivo public/CNAME fixa o domínio a cada deploy.
 const nextConfig: NextConfig = {
   // Export 100% estático (gera a pasta `out/` com HTML/CSS/JS).
   output: "export",
-
-  // Prefixo de rota/asset exigido pelo project page do GitHub Pages.
-  basePath: repoBase,
 
   // Cada rota vira /rota/index.html — evita 404 ao recarregar rota interna no Pages.
   trailingSlash: true,
