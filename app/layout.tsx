@@ -31,7 +31,7 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://app.sommainc.com.br"),
+  metadataBase: new URL("https://sommainc.com.br"),
   title: {
     default: "SOMMA — Inteligência de Resultado para o Mercado Imobiliário",
     template: "%s · SOMMA",
